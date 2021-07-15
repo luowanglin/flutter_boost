@@ -122,6 +122,13 @@ class BoostNavigator {
   Future<bool> pop<T extends Object>([T result]) async =>
       await appState.popWithResult(result);
 
+  /// Remove the pages until with the given [pagename]
+  void popUntil<T extends Object>(String pageName, [T result]) async {
+    while (appState.getTopPageInfo().pageName != pageName) {
+      await pop(result);
+    }
+  }
+
   /// Remove the page with the given [uniqueId] from hybrid stack.
   ///
   /// This API is for backwards compatibility.
