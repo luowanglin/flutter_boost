@@ -123,9 +123,9 @@ class BoostNavigator {
       await appState.popWithResult(result);
 
   /// Remove the pages until with the given [pagename]
-  void popUntil<T extends Object>(String pageName, [T result]) async {
+  void popUntil<T extends Object>(String pageName, [T result]) {
     while (appState.containers.last.pageInfo.pageName != pageName) {
-      await pop(result);
+      pop(result);
       appState.remove(appState.getTopPageInfo().uniqueId);
     }
   }
