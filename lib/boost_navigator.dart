@@ -123,11 +123,26 @@ class BoostNavigator {
       await appState.popWithResult(result);
 
   /// Remove the pages until with the given [pagename]
-  void popUntil<T extends Object>(String pageName, [T result]) {
+  void popUntil<T extends Object>(String pageName, String defaultPage,
+      [T result]) {
+    if (_pageExist(pageName) == false) {
+      pageName = defaultPage;
+    }
     while (appState.containers.last.pageInfo.pageName != pageName) {
       pop(result);
       appState.remove(appState.getTopPageInfo().uniqueId);
     }
+  }
+
+  bool _pageExist(String pageName) {
+    bool exist = false;
+    for (var container in appState.containers) {
+      if (container.pageInfo.pageName == pageName) {
+        exist = true;
+        break;
+      }
+    }
+    return exist;
   }
 
   /// Remove the page with the given [uniqueId] from hybrid stack.
